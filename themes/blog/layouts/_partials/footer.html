@@ -1,0 +1,56 @@
+<footer id='footer' class='bg-gray-50 border-t border-gray-200 mt-16'>
+  <div class='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
+    <div class='flex justify-between items-center'>
+      <div class='flex items-center'>
+        <a href='#'>
+          <img class='w-8 h-8 mr-3' src='/logo.svg' alt='logo' />
+        </a>
+      </div>
+      <div class='text-sm text-gray-600'>
+        © 2025 trf.kz.
+        <a
+          href='#'
+          class='text-blue-600 hover:text-blue-800 ml-2 cursor-pointer'
+          >Политика конфиденциальности</a
+        >
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const hamburger = document.getElementById('hamburger')
+    const mobileMenu = document.getElementById('mobile-menu')
+
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener('click', function () {
+        hamburger.classList.toggle('active')
+        mobileMenu.classList.toggle('hidden')
+      })
+
+      // Close mobile menu when clicking outside
+      document.addEventListener('click', function (e) {
+        if (
+          e.target &&
+          !hamburger.contains(e.target) &&
+          !mobileMenu.contains(e.target)
+        ) {
+          hamburger.classList.remove('active')
+          mobileMenu.classList.add('hidden')
+        }
+      })
+    }
+  })
+
+  // Функция для переключения мобильного dropdown
+  window.toggleMobileDropdown = function (button) {
+    const dropdown = button.nextElementSibling
+    const arrow = button.querySelector('svg')
+
+    if (dropdown && arrow) {
+      dropdown.classList.toggle('hidden')
+      arrow.classList.toggle('rotate-180')
+    }
+  }
+</script>

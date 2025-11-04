@@ -1,0 +1,191 @@
+<header id='header' class='border-b border-gray-200 relative'>
+  <div class='max-w-6xl mx-auto px-4 sm:px-6 lg:px-8'>
+    <div class='flex justify-between items-center h-16'>
+      <div class='flex items-center'>
+        <a href='/' class='flex flex-row'>
+          <img
+            class='w-8 h-8 mr-3'
+            src='/logo.svg'
+            alt='modern minimalist logo for trf.kz telecom website, blue and gray colors, simple geometric design'
+          />
+          <span class='text-2xl font-bold text-blue-600'>trf.kz</span>
+        </a>
+      </div>
+
+      <!-- Hamburger button -->
+      <button
+        id='hamburger'
+        class='md:hidden flex flex-col justify-center items-center w-10 h-10 border-2 border-gray-200 rounded-lg space-y-1 p-2 group'
+        aria-label='Menu'
+      >
+        <span
+          class='w-6 h-0.5 bg-gray-600 transition-transform duration-200 ease-in-out transform origin-center group-[.active]:rotate-45 group-[.active]:translate-y-1.5'
+        ></span>
+        <span
+          class='w-6 h-0.5 bg-gray-600 transition-opacity duration-200 ease-in-out group-[.active]:opacity-0'
+        ></span>
+        <span
+          class='w-6 h-0.5 bg-gray-600 transition-transform duration-200 ease-in-out transform origin-center group-[.active]:-rotate-45 group-[.active]:-translate-y-1.5'
+        ></span>
+      </button>
+
+      <!-- Desktop navigation -->
+      <nav class='hidden md:flex space-x-8'>
+        <a
+          href='#'
+          class='text-gray-700 hover:text-blue-600 transition-colors cursor-pointer'
+          >О нас</a
+        >
+        <a
+          href='#'
+          class='text-gray-700 hover:text-blue-600 transition-colors cursor-pointer'
+          >Контакты</a
+        >
+      </nav>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div
+    id='mobile-menu'
+    class='hidden md:hidden absolute top-16 left-0 w-full bg-white border-b border-gray-200 shadow-lg z-50'
+  >
+    <div class='px-4 py-2 space-y-2'>
+      <a
+        href='#'
+        class='block py-2 text-gray-700 hover:text-blue-600 transition-colors'
+        >О нас</a
+      >
+      <a
+        href='#'
+        class='block py-2 text-gray-700 hover:text-blue-600 transition-colors'
+        >Контакты</a
+      >
+    </div>
+    <div class='px-4 py-2 space-y-2 bg-gray-900'>
+      <!-- Теле2 dropdown для мобильных -->
+      <div class='mobile-dropdown'>
+        <button
+          class='flex items-center justify-between w-full py-2 text-white hover:text-blue-600 transition-colors'
+          onclick='toggleMobileDropdown(this)'
+        >
+          <span>Теле2</span>
+          <svg
+            class='w-4 h-4 transition-transform duration-200'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M19 9l-7 7-7-7'></path>
+          </svg>
+        </button>
+        <div class='mobile-dropdown-content hidden mt-2 ml-4 space-y-2'>
+          <a
+            href='#'
+            class='block py-2 text-gray-300 hover:text-blue-400 transition-colors'
+          >
+            Тарифы
+          </a>
+          <a
+            href='#'
+            class='block py-2 text-gray-300 hover:text-blue-400 transition-colors'
+          >
+            Услуги
+          </a>
+        </div>
+      </div>
+
+      <a
+        href='#'
+        class='block py-2 text-white hover:text-blue-600 transition-colors'
+        >Актив</a
+      >
+      <a
+        href='#'
+        class='block py-2 text-white hover:text-blue-600 transition-colors'
+        >Кселл</a
+      >
+      <a
+        href='#'
+        class='block py-2 text-white hover:text-blue-600 transition-colors'
+        >Билайн</a
+      >
+      <a
+        href='#'
+        class='block py-2 text-white hover:text-blue-600 transition-colors'
+        >Казахтелеком</a
+      >
+    </div>
+  </div>
+</header>
+
+<!-- Desktop main navigation -->
+<nav id='main-nav' class='bg-gray-900 text-white hidden md:block'>
+  <div class='max-w-6xl mx-auto px-4 sm:px-6 lg:px-8'>
+    <div class='flex space-x-8 h-12 items-center'>
+      <!-- Теле2 dropdown -->
+      <div class='relative group'>
+        <button
+          class='flex items-center space-x-1 hover:text-blue-600 transition-colors cursor-pointer'
+        >
+          <span>Теле2</span>
+          <svg
+            class='w-4 h-4 transition-transform duration-200 group-hover:rotate-180'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M19 9l-7 7-7-7'></path>
+          </svg>
+        </button>
+        <div
+          class='absolute top-full left-0 w-48 bg-white shadow-lg rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50'
+        >
+          <div class='py-2'>
+            <a
+              href='#'
+              class='block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-colors'
+            >
+              Тарифы
+            </a>
+            <a
+              href='#'
+              class='block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-colors'
+            >
+              Услуги
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <a
+        href='#'
+        class='hover:text-blue-600 transition-colors cursor-pointer'
+        >Актив</a
+      >
+      <a
+        href='#'
+        class='hover:text-blue-600 transition-colors cursor-pointer'
+        >Кселл</a
+      >
+      <a
+        href='#'
+        class='hover:text-blue-600 transition-colors cursor-pointer'
+        >Билайн</a
+      >
+      <a
+        href='#'
+        class='hover:text-blue-600 transition-colors cursor-pointer'
+        >Казахтелеком</a
+      >
+    </div>
+  </div>
+</nav>

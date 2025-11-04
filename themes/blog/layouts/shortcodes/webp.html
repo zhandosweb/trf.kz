@@ -1,0 +1,17 @@
+{{- $src := .Get "src" -}}
+{{- $alt := .Get "alt" -}}
+{{- $img := resources.Get (printf "images/%s" $src) -}}
+{{- if $img -}}
+  {{- $resized := $img.Resize "640x webp q80" -}}
+  <img
+    class="w-full max-w-[640px] mx-auto rounded-lg mb-8"
+    src="{{ $resized.RelPermalink }}"
+    alt="{{ $alt }}"
+    width="{{ $resized.Width }}"
+    height="{{ $resized.Height }}"
+    loading="lazy"
+    decoding="async"
+  />
+{{- else -}}
+  <p class="text-red-600">Изображение "{{ $src }}" не найдено в assets/images/</p>
+{{- end -}}

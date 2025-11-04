@@ -1,0 +1,19 @@
+{{ $src := .Get "src" }}
+{{ $alt := .Title }}
+
+{{ $path := printf "images/%s" $src }}
+{{ $img := resources.Get $path }}
+
+{{ if not $img }}
+  {{ errorf "Image not found: %s" $path }}
+{{ else }}
+  {{ $resized := $img.Fit "640x webp" }}
+  <img
+    class="w-full max-w-[640px] mx-auto rounded-lg mb-8"
+    src="{{ $resized.RelPermalink }}"
+    alt="{{ $alt }}"
+    width="640"
+    loading="eager"
+    decoding="async"
+  />
+{{ end }}

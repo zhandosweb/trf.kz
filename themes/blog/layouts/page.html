@@ -1,27 +1,54 @@
 {{ define "main" }}
 
+{{- if ne .Params.showBreadcrumb false }}
+{{ partial "breadcrumbs.html" . }}
+{{- end }}
+
 <article id="article-content">
   <header id="article-header" class="mb-8">
     <h1 class="text-4xl font-bold text-gray-900 mb-4">
       {{ .Title }}
     </h1>
+    {{- if ne .Params.showDates false }}
     <div id="article-meta" class="text-sm text-gray-600 mb-6">
         <span>Дата публикации: {{ .Date.Format "02.01.2006" }}</span>
         <span>Дата обновления: {{ .Lastmod.Format "02.01.2006" }}</span>
     </div>
+    {{- end }}
+    {{- if ne .Params.showLeadText false }}
+    {{- with .Params.leadtext }}
     <div
       id="lead-text"
       class="text-xl text-gray-700 leading-relaxed mb-8"
     >
-      {{ .Params.Leadtext }}
+      {{ . }}
     </div>
-    <img
-      class="w-full max-w-[640px] mx-auto rounded-lg mb-8"
-      alt="alt text"
-      src="https://storage.googleapis.com/uxpilot-auth.appspot.com/33c2e58a33-15f346774c56154f4582.png"
-    />
+    {{- end }}
+    {{- end }}
+
+
+    {{- with .Params.cover -}}
+         {{- $img := resources.Get (printf "images/%s" .) -}}
+         {{- if $img -}}
+           {{- $resized := $img.Resize "640x webp q80" -}}
+           <img
+             class="w-full max-w-[640px] mx-auto rounded-lg mb-8"
+             src="{{ $resized.RelPermalink }}"
+             alt="{{ $.Params.coverAlt | default $.Title }}"
+             width="{{ $resized.Width }}"
+             height="{{ $resized.Height }}"
+             loading="eager"
+             decoding="async"
+           />
+         {{- end -}}
+       {{- end -}}
+
   </header>
+
+  {{- if ne .Params.showTOC false }}
   {{ .TableOfContents }}
+  {{- end }}
+
   <div id="article-body" class="prose prose-base lg:prose-lg max-w-none">
     {{ .Content }}
   </div>

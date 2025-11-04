@@ -1,3 +1,62 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
 @source "hugo_stats.json";
+
+/* Table of Contents Styles */
+#TableOfContents {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+}
+
+#TableOfContents::before {
+  content: 'Содержание статьи:';
+  display: block;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+
+#TableOfContents > nav > ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#TableOfContents ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#TableOfContents > nav > ul > li {
+  margin-bottom: 0.5rem;
+}
+
+#TableOfContents li {
+  line-height: 1.75;
+}
+
+/* Nested lists (h3 level) with left padding */
+#TableOfContents ul ul {
+  padding-left: 1.5rem;
+  margin-top: 0.25rem;
+}
+
+#TableOfContents ul ul li {
+  margin-bottom: 0.25rem;
+}
+
+#TableOfContents a {
+  color: #2563eb;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+#TableOfContents a:hover {
+  color: #1e40af;
+}

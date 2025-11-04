@@ -1,0 +1,12 @@
+<a
+  href='{{ .Get "url" }}'
+  class='flex justify-between items-center p-3 no-underline cursor-pointer bg-gray-50 hover:bg-gray-100 rounded-lg border-4 border-gray-100'
+>
+  <div>
+    <span class='font-medium'>{{ .Get "title" }}</span>
+    <div class='text-sm text-gray-600'>
+      {{ with .Get "calls" }}{{ . }}{{ end }}{{ if and (.Get "calls") (.Get "sms") }} • {{ end }}{{ with .Get "sms" }}{{ . }}{{ end }}{{ if and (or (.Get "calls") (.Get "sms")) (.Get "internet") }} • {{ end }}{{ with .Get "internet" }}{{ . }}{{ end }}
+    </div>
+  </div>
+  <span class='text-gray-900 font-semibold'>{{ .Get "price" }} ₸{{ with .Get "period" }}/{{ . }}{{ else }}/мес{{ end }}</span>
+</a>

@@ -2,10 +2,11 @@
 date: "2025-11-04T08:02:22+05:00"
 title: "Title"
 description: "Description"
-keywords: "keyword1, keyword2, keyword3"
-cover: "image.png"
-coverAlt: "Описание картинки"
-leadtext: "Lead Text"
+showBreadcrumb: false
+showLeadText: false
+showTOC: false
+showDates: false
+noindex: true
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.

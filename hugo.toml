@@ -3,6 +3,9 @@ languageCode = 'ru-RU'
 title = 'Lol Агрегатор мобильных операторов в Казахстане'
 theme = 'blog'
 enableGitInfo = true
+
+[params]
+  author = 'Жандос Мукатаев'
 [build]
   [build.buildStats]
     enable = true

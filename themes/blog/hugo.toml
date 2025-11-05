@@ -1,7 +1,7 @@
 [menu]
   # Верхнее меню (О нас, Контакты)
   [[menu.top]]
-    name = 'Test О нас'
+    name = 'О нашем сайте'
     title = 'Информация о проекте'
     url = '/about/'
     weight = 10
@@ -14,13 +14,13 @@
 
   # Основная навигация (операторы и выпадающие элементы)
   [[menu.main]]
-    name = 'Test Теле2'
+    name = 'Теле2'
     identifier = 'tele2'
     url = '/tele2/'
     weight = 10
 
   [[menu.main]]
-    name = 'Test Тарифы'
+    name = 'Тарифы'
     title = 'Тарифные планы Теле2'
     url = '/tele2/tarify/'
     parent = 'tele2'
@@ -32,23 +32,3 @@
     url = '/tele2/uslugi/'
     parent = 'tele2'
     weight = 12
-
-  [[menu.main]]
-    name = 'Актив'
-    url = '/aktiv/'
-    weight = 20
-
-  [[menu.main]]
-    name = 'Кселл'
-    url = '/kcell/'
-    weight = 30
-
-  [[menu.main]]
-    name = 'Билайн'
-    url = '/beeline/'
-    weight = 40
-
-  [[menu.main]]
-    name = 'Казахтелеком'
-    url = '/kazakhtelecom/'
-    weight = 50

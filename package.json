@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "dev": "rmdir /s /q public && hugo server"
+    "dev": "rmdir /s /q public && hugo server",
+    "build": "hugo --cleanDestinationDir"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.16",

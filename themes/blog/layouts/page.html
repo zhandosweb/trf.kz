@@ -11,7 +11,6 @@
     </h1>
     {{- if ne .Params.showDates false }}
     <div id="article-meta" class="text-sm text-gray-600 mb-6">
-        <span>Дата публикации: {{ .Date.Format "02.01.2006" }}</span>
         <span>Дата обновления: {{ .Lastmod.Format "02.01.2006" }}</span>
     </div>
     {{- end }}

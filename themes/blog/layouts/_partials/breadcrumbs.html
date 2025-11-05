@@ -1,7 +1,20 @@
-<nav id='breadcrumbs' class='text-sm text-gray-500 mb-6'>
-  <a href='#' class='hover:text-blue-600 cursor-pointer'>Главная</a>
+<nav id='breadcrumbs' class='text-sm text-gray-500 mb-6' itemscope itemtype="https://schema.org/BreadcrumbList">
+  <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemprop="item" href='#' class='hover:text-blue-600 cursor-pointer'>
+      <span itemprop="name">Главная</span>
+    </a>
+    <meta itemprop="position" content="1" />
+  </span>
   <span class='mx-2'>/</span>
-  <a href='#' class='hover:text-blue-600 cursor-pointer'>Теле2</a>
+  <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a itemprop="item" href='#' class='hover:text-blue-600 cursor-pointer'>
+      <span itemprop="name">Теле2</span>
+    </a>
+    <meta itemprop="position" content="2" />
+  </span>
   <span class='mx-2'>/</span>
-  <span>Обзор тарифа Просто Супер</span>
+  <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <span itemprop="name">Обзор тарифа Просто Супер</span>
+    <meta itemprop="position" content="3" />
+  </span>
 </nav>

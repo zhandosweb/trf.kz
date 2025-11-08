@@ -1,6 +1,6 @@
 baseURL = 'https://trf.kz/'
 languageCode = 'ru-RU'
-title = 'Lol Агрегатор мобильных операторов в Казахстане'
+title = 'Агрегатор мобильных операторов в Казахстане'
 theme = 'blog'
 enableGitInfo = true
 

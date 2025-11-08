@@ -1,103 +1,35 @@
-<a
-  href='{{ .Get "url" }}'
-  class='no-underline bg-gray-50 border-4 border-gray-100 hover:bg-gray-100 rounded-lg p-6'
->
-  <div class='text-center mb-4 flex flex-col justify-center items-center'>
-    <h3 class='mt-0! mb-0!'>{{ .Get "title" }}</h3>
-    <div class='flex items-center space-x-2'>
-      <span class='text-xl font-bold text-blue-600'> {{ .Get "price" }} ₸ </span>
-      <span class='text-sm text-gray-600'> {{ .Get "period" | default "в месяц" }} </span>
-    </div>
+<!-- Новая версия компонента с массивом features -->
+{{ with .Get "url" }}
+<a href='{{ . }}' class='no-underline bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-blue-300 transition-colors flex flex-col h-full'>
+{{ else }}
+<div class='bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-blue-300 transition-colors flex flex-col h-full'>
+{{ end }}
+  <!-- Заголовок тарифа -->
+  <h3 class='text-lg font-semibold text-gray-700 mb-3 mt-0!'>{{ .Get "title" }}</h3>
+
+  <!-- Цена -->
+  <div class='mb-4'>
+    <span class='text-4xl font-bold text-blue-600'>{{ .Get "price" }}</span>
+    <span class='text-base text-gray-600 ml-1'>{{ .Get "period" | default "₸/месяц" }}</span>
   </div>
-  <div class='space-y-3 mb-6'>
-    {{ with .Get "calls" }}
-    <div class='flex items-center justify-between'>
-      <div class='flex items-center'>
-        <svg
-          class='mr-2'
-          width='16px'
-          height='16px'
-          viewBox='0 0 16 16'
-          fill='none'
-          xmlns='http://www.w3.org/2000/svg'
-        >
-          <g id='SVGRepo_bgCarrier' stroke-width='0'></g>
-          <g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'></g>
-          <g id='SVGRepo_iconCarrier'>
-            <path
-              d='M1 5V1H7V5L4.5 7.5L8.5 11.5L11 9H15V15H11C5.47715 15 1 10.5228 1 5Z'
-              fill='#155dfc'
-            ></path>
-          </g>
-        </svg>
-        <span class='text-sm'>Звонки</span>
-      </div>
-      <span class='font-semibold text-sm'>{{ . }}</span>
-    </div>
-    {{ end }}
-    {{ with .Get "internet" }}
-    <div class='flex items-center justify-between'>
-      <div class='flex items-center'>
-        <svg
-          class='mr-2'
-          width='16px'
-          height='16px'
-          viewBox='0 0 16 16'
-          fill='none'
-          xmlns='http://www.w3.org/2000/svg'
-        >
-          <g id='SVGRepo_bgCarrier' stroke-width='0'></g>
-          <g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'></g>
-          <g id='SVGRepo_iconCarrier'>
-            <path
-              d='M0 7L1.17157 5.82843C2.98259 4.01741 5.43884 3 8 3C10.5612 3 13.0174 4.01742 14.8284 5.82843L16 7L14.5858 8.41421L13.4142 7.24264C11.9783 5.8067 10.0307 5 8 5C5.96928 5 4.02173 5.8067 2.58579 7.24264L1.41421 8.41421L0 7Z'
-              fill='#155dfc'
-            ></path>
-            <path
-              d='M4.24264 11.2426L2.82843 9.82843L4 8.65685C5.06086 7.59599 6.49971 7 8 7C9.50029 7 10.9391 7.59599 12 8.65686L13.1716 9.82843L11.7574 11.2426L10.5858 10.0711C9.89999 9.38527 8.96986 9 8 9C7.03014 9 6.1 9.38527 5.41421 10.0711L4.24264 11.2426Z'
-              fill='#155dfc'
-            ></path>
-            <path
-              d='M8 15L5.65685 12.6569L6.82842 11.4853C7.13914 11.1746 7.56057 11 8 11C8.43942 11 8.86085 11.1746 9.17157 11.4853L10.3431 12.6569L8 15Z'
-              fill='#155dfc'
-            ></path>
-          </g>
-        </svg>
-        <span class='text-sm'>Интернет</span>
-      </div>
-      <span class='font-semibold text-sm'>{{ . }}</span>
-    </div>
-    {{ end }}
-    {{ with .Get "sms" }}
-    <div class='flex items-center justify-between'>
-      <div class='flex items-center'>
-        <svg
-          class='mr-2'
-          width='16px'
-          height='16px'
-          viewBox='0 0 24 24'
-          fill='none'
-          xmlns='http://www.w3.org/2000/svg'
-        >
-          <g id='SVGRepo_bgCarrier' stroke-width='0'></g>
-          <g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'></g>
-          <g id='SVGRepo_iconCarrier'>
-            <path
-              d='M21.0039 12C21.0039 16.9706 16.9745 21 12.0039 21C9.9675 21 3.00463 21 3.00463 21C3.00463 21 4.56382 17.2561 3.93982 16.0008C3.34076 14.7956 3.00391 13.4372 3.00391 12C3.00391 7.02944 7.03334 3 12.0039 3C16.9745 3 21.0039 7.02944 21.0039 12Z'
-              stroke='#155dfc'
-              stroke-width='2'
-              stroke-linecap='round'
-              stroke-linejoin='round'
-            ></path>
-          </g>
-        </svg>
-        <span class='text-sm'>SMS</span>
-      </div>
-      <span class='font-semibold text-sm'>{{ . }}</span>
-    </div>
+
+  <!-- Список features -->
+  <div class='space-y-2 mb-6 grow'>
+    {{ with .Get "features" }}
+      {{ range split . ";" }}
+        <div class='text-sm text-gray-700'>{{ trim . " " }}</div>
+      {{ end }}
     {{ end }}
   </div>
-  {{ with .Get "description" }}
-  <p class='text-sm text-gray-600 text-center'>{{ . }}</p>
+
+  <!-- Текст ссылки "Подробнее" -->
+  {{ with .Get "url" }}
+  <span class='text-blue-600 hover:text-blue-600 text-sm font-medium block mt-auto'>
+    {{ $.Get "linktext" | default "Подробнее" }}
+  </span>
   {{ end }}
+{{ if .Get "url" }}
 </a>
+{{ else }}
+</div>
+{{ end }}

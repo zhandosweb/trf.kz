@@ -2,13 +2,32 @@
 {{- $alt := .Get "alt" -}}
 {{- $img := resources.Get (printf "images/%s" $src) -}}
 {{- if $img -}}
-  {{- $resized := $img.Resize "640x webp q80" -}}
+  {{- $maxWidth := 640 -}}
+  {{- /* получить ширину исходника (int) */ -}}
+  {{- $origW := $img.Width -}}
+  {{- /* если исходная ширина >= макс — ресайз до макс, иначе ресайз до исходной ширины (только конвертация в webp q80, без апскейла) */ -}}
+  {{- if ge $origW $maxWidth -}}
+    {{- $resized := $img.Resize (printf "%dx webp q80" $maxWidth) -}}
+  {{- else -}}
+    {{- $resized := $img.Resize (printf "%dx webp q80" $origW) -}}
+  {{- end -}}
+
+  {{- /* Важно: переменная $resized должна быть в области видимости — объявим корректно выше. */ -}}
+  {{- /* Реализация: присвоим в scratch, чтобы выйти за пределы if/else scope */ -}}
+  {{- $scratch := newScratch -}}
+  {{- if ge $origW $maxWidth -}}
+    {{- $scratch.Set "out" ($img.Resize (printf "%dx webp q80" $maxWidth)) -}}
+  {{- else -}}
+    {{- $scratch.Set "out" ($img.Resize (printf "%dx webp q80" $origW)) -}}
+  {{- end -}}
+  {{- $res := $scratch.Get "out" -}}
+
   <img
-    class="w-full max-w-[640px] mx-auto rounded-lg mb-8"
-    src="{{ $resized.RelPermalink }}"
+    class="w-auto max-w-full mx-auto rounded-lg mb-8"
+    src="{{ $res.RelPermalink }}"
     alt="{{ $alt }}"
-    width="{{ $resized.Width }}"
-    height="{{ $resized.Height }}"
+    width="{{ $res.Width }}"
+    height="{{ $res.Height }}"
     loading="lazy"
     decoding="async"
   />

@@ -1,0 +1,39 @@
+{{- $category := .Get "category" -}}
+{{- if not $category -}}
+  {{- $category = .Page.Section -}}
+{{- end -}}
+
+{{- $subsection := .Get "subsection" -}}
+{{- if not $subsection -}}
+  <p>Ошибка: в шорткоде <code>displaysections</code> нужно указать параметр <code>subsection</code>.</p>
+{{- else -}}
+  {{- $sectionPages := where .Site.RegularPages "Section" $category -}}
+  {{- $sectionDisplay := where $sectionPages "Params.section" $subsection -}}
+  {{- $items := slice -}}
+  {{- range $sectionDisplay -}}
+    {{- $name := .Title -}}
+    {{- with .Params.shortname -}}
+      {{- $name = . -}}
+    {{- end -}}
+    {{- $items = $items | append (dict "page" . "name" $name) -}}
+  {{- end -}}
+
+  {{- $items = sort $items "name" -}}
+
+  {{- if gt (len $items) 0 -}}
+  <ol>
+    {{- range $items -}}
+    {{- $p := .page -}}
+    <li>
+      <a href="{{ $p.RelPermalink }}">
+        {{- with $p.Params.shortname -}}
+          {{ . }}
+        {{- else -}}
+          {{ $p.Title }}
+        {{- end -}}
+      </a>
+    </li>
+    {{- end -}}
+  </ol>
+  {{- end -}}
+{{- end -}}

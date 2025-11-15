@@ -1,20 +1,56 @@
-<nav id='breadcrumbs' class='text-sm text-gray-500 mb-6' itemscope itemtype="https://schema.org/BreadcrumbList">
-  <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-    <a itemprop="item" href='#' class='hover:text-blue-600 cursor-pointer'>
-      <span itemprop="name">Главная</span>
-    </a>
-    <meta itemprop="position" content="1" />
-  </span>
-  <span class='mx-2'>/</span>
-  <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-    <a itemprop="item" href='#' class='hover:text-blue-600 cursor-pointer'>
-      <span itemprop="name">Теле2</span>
-    </a>
-    <meta itemprop="position" content="2" />
-  </span>
-  <span class='mx-2'>/</span>
-  <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-    <span itemprop="name">Обзор тарифа Просто Супер</span>
-    <meta itemprop="position" content="3" />
-  </span>
-</nav>
+{{- /*
+  Динамические хлебные крошки на основе .Ancestors.
+  Структура: Главная / Секция / Подраздел / Текущая страница
+  Подпись элемента: Params.shortname -> Params.h1 -> Title
+*/ -}}
+
+{{- if not .IsHome -}}
+  {{- /* Собираем предков текущей страницы, исключая главную */ -}}
+  {{- $ancestors := .Ancestors.Reverse -}}
+  {{- $pages := slice -}}
+  {{- range $ancestors -}}
+    {{- if not .IsHome -}}
+      {{- $pages = $pages | append . -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $pages = $pages | append . -}}
+
+  <nav id="breadcrumbs" class="text-sm text-gray-500 mb-6" itemscope itemtype="https://schema.org/BreadcrumbList">
+    {{/* Главная */}}
+    <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a itemprop="item" href="/" class="hover:text-blue-600 cursor-pointer">
+        <span itemprop="name">Главная</span>
+      </a>
+      <meta itemprop="position" content="1" />
+    </span>
+
+    {{- $pos := 2 -}}
+    {{- $lastIndex := sub (len $pages) 1 -}}
+
+    {{- range $i, $p := $pages -}}
+      {{- /* Определяем читаемое имя: shortname -> h1 -> Title */ -}}
+      {{- $label := $p.Title -}}
+      {{- with $p.Params.h1 -}}
+        {{- $label = . -}}
+      {{- end -}}
+      {{- with $p.Params.shortname -}}
+        {{- $label = . -}}
+      {{- end -}}
+
+      {{- if $label -}}
+        <span class="mx-2">/</span>
+        <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          {{- if lt $i $lastIndex -}}
+            <a itemprop="item" href="{{ $p.RelPermalink }}" class="hover:text-blue-600 cursor-pointer">
+              <span itemprop="name">{{ $label }}</span>
+            </a>
+          {{- else -}}
+            <span itemprop="name">{{ $label }}</span>
+          {{- end -}}
+          <meta itemprop="position" content="{{ $pos }}" />
+        </span>
+        {{- $pos = add $pos 1 -}}
+      {{- end -}}
+    {{- end -}}
+  </nav>
+{{- end -}}

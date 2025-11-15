@@ -1,5 +1,5 @@
 <header id='header' class='border-b border-gray-200 relative'>
-  <div class='max-w-4xl mx-auto px-4 sm:px-6 lg:px-8'>
+  <div class='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
     <div class='flex justify-between items-center h-16'>
       <div class='flex items-center'>
         <a href='{{ "/" | relURL }}' class='flex flex-row'>
@@ -59,13 +59,17 @@
       {{- range . -}}
       {{- if .HasChildren -}}
       <div class='mobile-dropdown'>
-        <button class='flex items-center justify-between w-full py-2 text-white hover:text-blue-600 transition-colors'
-          onclick='toggleMobileDropdown(this)' type='button'>
-          <span>{{ .Name }}</span>
-          <svg class='w-4 h-4 transition-transform duration-200' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'></path>
-          </svg>
-        </button>
+        <div class='flex items-center justify-between w-full'>
+          <a href='{{ .URL }}'
+            class='py-2 text-white hover:text-blue-600 transition-colors'
+            {{ with .Title }}title='{{ . }}' {{ end }}>{{ .Name }}</a>
+          <button class='p-2 text-white hover:text-blue-600 transition-colors'
+            onclick='toggleMobileDropdown(this)' type='button' aria-label='Показать подменю'>
+            <svg class='w-4 h-4 transition-transform duration-200' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'></path>
+            </svg>
+          </button>
+        </div>
         <div class='mobile-dropdown-content hidden mt-2 ml-4 space-y-2'>
           {{- range .Children -}}
           <a href='{{ .URL }}' class='block py-2 text-gray-300 hover:text-blue-400 transition-colors' {{ with .Title
@@ -87,20 +91,22 @@
 
 <!-- Desktop main navigation -->
 <nav id='main-nav' class='bg-gray-900 text-white hidden md:block'>
-  <div class='max-w-4xl mx-auto px-4 sm:px-6 lg:px-8'>
+  <div class='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
     <div class='flex space-x-8 h-12 items-center'>
       {{- $currentPage := . -}}
       {{- with site.Menus.main -}}
       {{- range . -}}
       {{- if .HasChildren -}}
       <div class='relative group'>
-        <button class='flex items-center space-x-1 hover:text-blue-600 transition-colors cursor-pointer' type='button'>
-          <span>{{ .Name }}</span>
+        <div class='flex items-center space-x-1 hover:text-blue-600 transition-colors cursor-pointer'>
+          <a href='{{ .URL }}'
+            class='hover:text-blue-600 transition-colors'
+            {{ with .Title }}title='{{ . }}' {{ end }}>{{ .Name }}</a>
           <svg class='w-4 h-4 transition-transform duration-200 group-hover:rotate-180' fill='none'
             stroke='currentColor' viewBox='0 0 24 24'>
             <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'></path>
           </svg>
-        </button>
+        </div>
         <div
           class='absolute top-full left-0 w-48 bg-white shadow-lg rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50'>
           <div class='py-2'>

@@ -5,7 +5,7 @@ h1: 'Как отключить тариф на Теле2 в Казахстане
 title: 'Как отключить тариф на Теле2 в Казахстане'
 description: 'Узнайте, можно ли отключить тарифный план Теле2, инструкция по переходу на тариф без абонентской платы.'
 keywords: 'как отключить тариф теле2'
-section: 'trafik-i-internet'
+section: 'nastrojka-tarifnogo-plana'
 shortname: 'Как отключить тариф на Теле2'
 cover: 'kak-otklyuchit-tarif-na-tele2.png'
 coverAlt: 'Как отключить тариф на Теле2'

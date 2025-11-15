@@ -1,5 +1,7 @@
 {{- define "main" -}}
 
+<main id='main-content' class='max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
+
 {{- if ne .Params.showBreadcrumb false }}
 {{- partial "breadcrumbs.html" . -}}
 {{- end }}
@@ -52,5 +54,7 @@
     {{ .Content }}
   </div>
 </article>
+
+</main>
 
 {{- end }}

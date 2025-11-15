@@ -1,0 +1,23 @@
+{{- define "main" -}}
+
+<main id='main-content' class='max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
+
+{{- if ne .Params.showBreadcrumb false }}
+{{- partial "breadcrumbs.html" . -}}
+{{- end }}
+
+<article id="article-content">
+  <header id="article-header" class="mb-8">
+    <h1 class="text-4xl font-bold text-gray-900 mb-4">
+      {{ .Params.h1 }}
+    </h1>
+  </header>
+
+  <div id="article-body" class="prose prose-base lg:prose-lg max-w-none">
+    {{ .Content }}
+  </div>
+</article>
+
+</main>
+
+{{- end }}

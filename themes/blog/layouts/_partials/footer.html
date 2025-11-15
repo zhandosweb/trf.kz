@@ -1,5 +1,5 @@
 <footer id='footer' class='bg-gray-50 border-t border-gray-200 mt-16'>
-  <div class='max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
+  <div class='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
     <div class='flex justify-between items-center'>
       <div class='flex items-center'>
         <a href='{{ "/" | relURL }}'>
@@ -45,7 +45,10 @@
 
   // Функция для переключения мобильного dropdown
   window.toggleMobileDropdown = function (button) {
-    const dropdown = button.nextElementSibling
+    // В новой разметке кнопка находится внутри flex-контейнера,
+    // а сам dropdown является следующим sibling этого контейнера.
+    const container = button.parentElement
+    const dropdown = container ? container.nextElementSibling : null
     const arrow = button.querySelector('svg')
 
     if (dropdown && arrow) {

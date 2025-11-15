@@ -1,10 +1,90 @@
-{{ define "main" }}
-  <h1>{{ .Title }}</h1>
-  {{ .Content }}
-  {{ range .Pages }}
-    <section>
-      <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-      {{ .Summary }}
-    </section>
-  {{ end }}
-{{ end }}
+{{- define "main" -}}
+
+<main id="main-content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+{{- if ne .Params.showBreadcrumb false }}
+  {{- partial "breadcrumbs.html" . -}}
+{{- end }}
+
+  <header class="mb-8">
+    <h1 class="text-4xl font-bold text-gray-900 mb-4">{{ .Title }}</h1>
+    {{- with .Content }}
+      <div class="prose prose-base lg:prose-lg max-w-none text-gray-700 mb-6">{{ . }}</div>
+    {{- end }}
+  </header>
+
+  <section aria-labelledby="latest-posts">
+    {{- if eq .CurrentSection . }}
+      {{- $allPages := where .Site.RegularPages "Section" .Section }}
+      {{- $paginator := .Paginate $allPages 12 }}
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {{- range $paginator.Pages }}
+          {{- $cover := .Params.cover }}
+          {{- $coverAlt := .Params.coverAlt | default .Title }}
+          {{- $shortname := .Params.shortname }}
+          {{- $h1 := .Params.h1 | default .Title }}
+          {{- $title := cond (ne $shortname "") $shortname $h1 }}
+          {{- $leadtext := .Params.leadtext }}
+          {{- $summary := .Summary }}
+          <a href="{{ .RelPermalink }}" class="flex flex-col h-full bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-200 overflow-hidden border border-gray-100 group focus:outline-none focus:ring-2 focus:ring-blue-500">
+            {{- if $cover }}
+              {{- $img := resources.Get (printf "images/%s" $cover) }}
+              {{- if $img }}
+                {{- $resized := $img.Resize "600x webp q80" }}
+                <img src="{{ $resized.RelPermalink }}" alt="{{ $coverAlt }}" class="w-full h-48 object-cover transition-transform duration-200 group-hover:scale-105" width="{{ $resized.Width }}" height="{{ $resized.Height }}" loading="lazy" decoding="async" />
+              {{- else }}
+                <div class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-400">No image</div>
+              {{- end }}
+            {{- else }}
+              <div class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-400">No image</div>
+            {{- end }}
+            <div class="flex flex-col flex-1 p-6">
+              <time class="text-xs text-gray-500 mb-2">{{ .Lastmod.Format "02.01.2006" }}</time>
+              <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors line-clamp-2">{{ $title }}</h3>
+              <p class="text-base text-gray-700 line-clamp-2 mb-6">
+                {{- $showlead := .Params.showleadtext }}
+                {{- if or (not (isset .Params "showleadtext")) (ne $showlead false) }}
+                  {{- if $leadtext }}{{ $leadtext }}
+                  {{- else if .Params.description }}{{ .Params.description | truncate 140 }}
+                  {{- else }}{{ $summary | truncate 140 }}
+                  {{- end }}
+                {{- else }}
+                  {{- if .Params.description }}{{ .Params.description | truncate 140 }}
+                  {{- else }}{{ $summary | truncate 140 }}
+                  {{- end }}
+                {{- end }}
+              </p>
+              <div class="mt-auto flex justify-end">
+                <span class="inline-block px-4 py-2 text-sm font-medium text-blue-600 border border-blue-100 rounded-lg bg-blue-50 group-hover:bg-blue-100 group-hover:text-blue-800 transition-colors">Читать</span>
+              </div>
+            </div>
+          </a>
+        {{- end }}
+      </div>
+      {{- if gt $paginator.TotalPages 1 }}
+        <nav class="flex justify-center mt-10" aria-label="Pagination">
+          <ul class="inline-flex -space-x-px">
+            {{- if $paginator.HasPrev }}
+              <li>
+                <a href="{{ $paginator.Prev.URL }}" class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">Назад</a>
+              </li>
+            {{- end }}
+            {{- range $i, $p := $paginator.Pagers }}
+              <li>
+                <a href="{{ $p.URL }}" class="px-3 py-2 leading-tight border border-gray-300 {{ if eq $p $paginator }}text-blue-600 bg-blue-50 border-blue-300{{else}}text-gray-500 bg-white hover:bg-gray-100 hover:text-gray-700{{end}}">{{ add $i 1 }}</a>
+              </li>
+            {{- end }}
+            {{- if $paginator.HasNext }}
+              <li>
+                <a href="{{ $paginator.Next.URL }}" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">Вперёд</a>
+              </li>
+            {{- end }}
+          </ul>
+        </nav>
+      {{- end }}
+    {{- end }}
+  </section>
+
+</main>
+
+{{- end -}}

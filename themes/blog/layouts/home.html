@@ -1,9 +1,102 @@
-{{ define "main" }}
-  {{ .Content }}
-  {{ range site.RegularPages }}
-    <section>
-      <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-      {{ .Summary }}
-    </section>
-  {{ end }}
-{{ end }}
+{{- define "main" -}}
+
+<main id="main-content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+  <header class="mb-10">
+    <h1 class="text-4xl font-bold text-gray-900 mb-4">{{ .Title }}</h1>
+    {{- with .Content -}}
+      <div class="prose prose-base lg:prose-lg max-w-none text-gray-700">{{ . }}</div>
+    {{- end -}}
+  </header>
+
+  {{/* Операторы: можно расширять список (beeline, altel и др.) */}}
+  {{- $operators := slice
+      (dict "id" "tele2" "name" "Теле2" "tariffsURL" "/tele2/tarify/" "servicesURL" "/tele2/uslugi/")
+  -}}
+
+  <div class="space-y-10">
+    {{- range $operators -}}
+      {{- $opId := .id -}}
+      {{- $opName := .name -}}
+      {{- $tariffsURL := .tariffsURL -}}
+      {{- $servicesURL := .servicesURL -}}
+      {{- $opURL := printf "/%s/" $opId -}}
+
+      {{- $pages := where $.Site.RegularPages "Section" $opId -}}
+      {{- $sorted := sort $pages "Lastmod" "desc" -}}
+      {{- $latest := first 4 $sorted -}}
+
+      {{- if gt (len $latest) 0 -}}
+      <section class="py-3 sm:py-5 border-t border-gray-100 first:border-t-0">
+        <div class="mb-2">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-1">
+            Последние статьи по
+            <a href="{{ $opURL }}" class="text-blue-600 hover:text-blue-800">
+              {{ $opName }}
+            </a>
+          </h2>
+        </div>
+
+        <div class="mb-3">
+          <div class="flex flex-wrap items-center gap-3 text-xs sm:text-sm text-gray-600">
+            <span class="font-medium">Разделы:</span>
+            <div class="flex flex-wrap gap-2">
+              {{- if $tariffsURL -}}
+              <a href="{{ $tariffsURL }}" class="inline-flex items-center px-3 py-1.5 rounded-full border border-gray-200 text-gray-800 bg-gray-50 hover:bg-gray-100 hover:border-blue-300 hover:text-blue-700 transition-colors text-xs sm:text-sm">
+                Тарифы {{ $opName }}
+              </a>
+              {{- end -}}
+
+              {{- if $servicesURL -}}
+              <a href="{{ $servicesURL }}" class="inline-flex items-center px-3 py-1.5 rounded-full border border-gray-200 text-gray-800 bg-gray-50 hover:bg-gray-100 hover:border-blue-300 hover:text-blue-700 transition-colors text-xs sm:text-sm">
+                Услуги {{ $opName }}
+              </a>
+              {{- end -}}
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-4">
+          {{- range $latest -}}
+          {{- $cover := .Params.cover -}}
+          {{- $coverAlt := .Params.coverAlt | default .Title -}}
+          {{- $shortname := .Params.shortname -}}
+          {{- $h1 := .Params.h1 | default .Title -}}
+          {{- $title := cond (ne $shortname "") $shortname $h1 -}}
+          {{- $lead := .Params.leadtext -}}
+          {{- if not $lead -}}
+            {{- $lead = .Params.description -}}
+          {{- end -}}
+
+          <a href="{{ .RelPermalink }}" class="flex flex-col h-full bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-200 overflow-hidden border border-gray-100 group focus:outline-none focus:ring-2 focus:ring-blue-500">
+            {{- if $cover -}}
+              {{- $img := resources.Get (printf "images/%s" $cover) -}}
+              {{- if $img -}}
+                {{- $resized := $img.Resize "600x webp q80" -}}
+                <img src="{{ $resized.RelPermalink }}" alt="{{ $coverAlt }}" class="w-full h-40 object-cover transition-transform duration-200 group-hover:scale-105" width="{{ $resized.Width }}" height="{{ $resized.Height }}" loading="lazy" decoding="async" />
+              {{- else -}}
+                <div class="w-full h-40 bg-gray-200 flex items-center justify-center text-gray-400 text-sm">Нет изображения</div>
+              {{- end -}}
+            {{- else -}}
+              <div class="w-full h-40 bg-gray-200 flex items-center justify-center text-gray-400 text-sm">Нет изображения</div>
+            {{- end -}}
+
+            <div class="flex flex-col flex-1 p-5">
+              <h3 class="text-lg font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-700 transition-colors">{{ $title }}</h3>
+              {{- if $lead -}}
+              <p class="text-sm text-gray-700 mb-4 line-clamp-3">{{ $lead }}</p>
+              {{- end -}}
+              <div class="mt-auto flex items-center justify-between text-xs text-gray-500">
+                <span>{{ .Lastmod.Format "02.01.2006" }}</span>
+              </div>
+            </div>
+          </a>
+          {{- end -}}
+        </div>
+      </section>
+      {{- end -}}
+    {{- end -}}
+  </div>
+
+</main>
+
+{{- end -}}
